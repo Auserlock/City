@@ -1,0 +1,7 @@
+# code style guide
+The include order of header files should be:
+1. User-defined headers
+2. Linux system headers
+3. third party library
+4. Standard library headers
+Within each category, header files should be organized in alphabetical order.
