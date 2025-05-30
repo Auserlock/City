@@ -9,21 +9,21 @@ file(GLOB_RECURSE TEST_SOURCE_FILES
 message(STATUS "Test sources: ${TEST_SOURCE_FILES}")
 
 add_executable(
-        LatteTest
+        CityTest
         ${TEST_SOURCE_FILES}
 )
 
 target_include_directories(
-        LatteTest
+        CityTest
         PRIVATE
         ${CMAKE_SOURCE_DIR}/include
-        ${CMAKE_SOURCE_DIR}/include/core
 )
 
 target_link_libraries(
-        LatteTest
+        CityTest
         PRIVATE
-        LatteCore
+        CityCore
+        CityUtil
         Eigen3::Eigen
         gtest
         gtest_main

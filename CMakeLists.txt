@@ -1,57 +1,81 @@
 cmake_minimum_required(VERSION 3.30)
-project(Latte)
+project(City)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_subdirectory(${CMAKE_SOURCE_DIR}/googletest)
-add_subdirectory(${CMAKE_SOURCE_DIR}/test)
+set(CMAKE_BUILD_TYPE Debug)
+
+#add_subdirectory(${CMAKE_SOURCE_DIR}/googletest)
+#add_subdirectory(${CMAKE_SOURCE_DIR}/test)
 
 find_package(Eigen3 3.4 REQUIRED NO_MODULE)
 
-file(GLOB_RECURSE LATTE_HEADER_FILES
+file(GLOB_RECURSE CITY_HEADER_FILES
         ${CMAKE_SOURCE_DIR}/include/*.hpp
 )
 file(GLOB_RECURSE CORE_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/src/core/*.cc
 )
+file(GLOB_RECURSE UTIL_SOURCE_FILES
+    ${CMAKE_SOURCE_DIR}/src/util/*.cc
+)
 
 add_library(
-        LatteCore
+        CityUtil
         SHARED
-        ${CORE_SOURCE_FILES}
-        ${LATTE_HEADER_FILES}
+        ${UTIL_SOURCE_FILES}
+        ${CITY_HEADER_FILES}
 )
 
 target_link_libraries(
-        LatteCore
+        CityUtil
         PRIVATE
         Eigen3::Eigen
 )
 
 target_include_directories(
-        LatteCore
+        CityUtil
         PRIVATE
         ${CMAKE_SOURCE_DIR}/include
-        ${CMAKE_SOURCE_DIR}/include/core
+)
+
+add_library(
+        CityCore
+        SHARED
+        ${CORE_SOURCE_FILES}
+        ${CITY_HEADER_FILES}
+)
+
+target_link_libraries(
+        CityCore
+        PRIVATE
+        Eigen3::Eigen
+)
+
+target_include_directories(
+        CityCore
+        PRIVATE
+        ${CMAKE_SOURCE_DIR}/include
 )
 
 add_executable(
-        Latte
+        City
         src/main.cpp
 )
 
 target_link_libraries(
-        Latte
+        City
         PRIVATE
-        LatteCore
+        CityCore
+        CityUtil
         Eigen3::Eigen
 )
 
 target_include_directories(
-        Latte
+        City
         PRIVATE
         ${CMAKE_SOURCE_DIR}/include
-        ${CMAKE_SOURCE_DIR}/include/core
 )
 
-ADD_DEPENDENCIES(Latte LatteCore)
+ADD_DEPENDENCIES(City CityCore)
+ADD_DEPENDENCIES(City CityUtil)
