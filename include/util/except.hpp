@@ -2,7 +2,7 @@
 #define UTIL_EXCEPT_HPP
 
 #include <stdexcept>
-#include <iostream>
+#include <sstream>
 
 namespace city
 {
@@ -25,6 +25,15 @@ namespace city
     };
 }
 
+// skip debug information
+#ifdef SKIP_DEBUG_INFO
+    #define DEBUG_INFO(msg)
+#else
+    #define DEBUG_INFO(msg) do {                        \
+        std::cerr << msg << std::endl;                       \
+    } while (0);
+#endif
+
 // skip checking arguments
 #ifdef SKIP_ARG_CHECK
     #define INVALID_ARG(msg)
@@ -37,7 +46,7 @@ namespace city
     } while (0);
 
     #define ARG_CHECK(cond, msg) do {                   \
-        if (!cond) {                                    \
+        if (!(cond)) {                                    \
             std::ostringstream oss;                     \
             oss << msg;                                 \
             throw std::invalid_argument(oss.str());     \
@@ -45,11 +54,12 @@ namespace city
     } while (0);
 #endif
 
+// skip debug assert (cause program terminate)
 #ifdef SKIP_ASSERT
     #define ASSERT_ARG(expr, msg)
 #else
     #define ASSERT_ARG(expr, msg) do {              \
-        if (!expr) {                                \
+        if (!(expr)) {                                \
             std::ostringstream oss;                 \
             oss << msg;                             \
             throw std::runtime_error(oss.str());    \

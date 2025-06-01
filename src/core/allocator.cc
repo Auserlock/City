@@ -1,8 +1,7 @@
 #include <core/allocator.hpp>
 #include <util/except.hpp>
 
-#include <sys/shm.h>
-#include <sys/mman.h>
+#include <malloc.h>
 
 #include <cstdlib>
 #include <cstring>
@@ -15,7 +14,7 @@ namespace city
 
     void* CPUAllocator::malloc(std::size_t n)
     {
-        void* ptr = std::aligned_alloc(align, round_up_align(n));
+        void* ptr = _aligned_malloc(round_up_align(n),align);
         if (!ptr)
         {
             std::cerr << fmt("CPU memory allocation failed. n = {}, align = {}\n", n, align);
@@ -26,14 +25,14 @@ namespace city
 
     void CPUAllocator::free(void* mem)
     { 
-        std::free(mem);
+        _aligned_free(mem);
     }
 
     void CPUAllocator::init(void* mem, const std::size_t n)
     {
         memset(mem, 0, n);
     }
-
+    /*
     void* SharedAllocator::malloc(const std::size_t n)
     {
         void* ptr = mmap(nullptr, round_up_align(n), PROT_READ|PROT_WRITE, MAP_ANON|MAP_SHARED, -1, 0);
@@ -54,4 +53,5 @@ namespace city
     {
         memset(mem, 0, n);
     }
+    */
 }

@@ -36,7 +36,7 @@ namespace city
 
     struct SharedAllocator final : public Allocator
     {
-        int size;
+        std::size_t size;
 
         SharedAllocator() : Allocator{32}, size{0} {}
         void* malloc(std::size_t n) override;
