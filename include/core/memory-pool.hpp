@@ -55,7 +55,7 @@ namespace city
         void free();
         void init_memory() const;
 
-        std::size_t get_used();
+        [[nodiscard]] std::size_t get_used() const;
         void set_used(std::size_t n);
         std::size_t get_cap();
     private:

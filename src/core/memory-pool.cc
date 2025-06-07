@@ -78,10 +78,19 @@ namespace city
         for (const auto pool : pools) { pool->init(); }
     }
 
-    // std::size_t MemoryPool::get_used()
-    // {
-    //     if (!cur) return pools[0]->used;
-    //
-    // }
+    std::size_t MemoryPool::get_used() const
+    {
+        if (!cur) return pools[0]->used;
+        size_t res = 0;
+        for (const auto pool : pools) { res += pool->used; }
+        return res;
+    }
+
+    void MemoryPool::set_used(std::size_t n)
+    {
+        
+    }
+
+
 
 }

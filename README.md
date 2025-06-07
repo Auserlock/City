@@ -1,3 +1,1 @@
-# Latte
-# City
 # City

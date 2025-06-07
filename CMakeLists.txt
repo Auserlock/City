@@ -23,7 +23,7 @@ if(SKIP_ARG_CHECK)
     add_compile_definitions(SKIP_ARG_CHECK)
 endif()
 
-find_package(Eigen3 CONFIG REQUIRED)
+#find_package(Eigen3 CONFIG REQUIRED)
 
 file(GLOB_RECURSE CITY_HEADER_FILES
         ${CMAKE_SOURCE_DIR}/include/*.hpp
@@ -45,7 +45,7 @@ add_library(
 target_link_libraries(
         CityUtil
         PRIVATE
-        Eigen3::Eigen
+#        Eigen3::Eigen
 )
 
 target_include_directories(
@@ -64,7 +64,7 @@ add_library(
 target_link_libraries(
         CityCore
         PRIVATE
-        Eigen3::Eigen
+#        Eigen3::Eigen
 )
 
 target_include_directories(
@@ -83,7 +83,7 @@ target_link_libraries(
         PRIVATE
         CityCore
         CityUtil
-        Eigen3::Eigen
+#        Eigen3::Eigen
 )
 
 target_include_directories(

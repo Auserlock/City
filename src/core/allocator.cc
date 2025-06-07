@@ -14,7 +14,7 @@ namespace city
 
     void* CPUAllocator::malloc(std::size_t n)
     {
-        void* ptr = _aligned_malloc(round_up_align(n),align);
+        void* ptr = aligned_alloc(align,round_up_align(n));
         if (!ptr)
         {
             std::cerr << fmt("CPU memory allocation failed. n = {}, align = {}\n", n, align);
@@ -25,7 +25,7 @@ namespace city
 
     void CPUAllocator::free(void* mem)
     { 
-        _aligned_free(mem);
+        std::free(mem);
     }
 
     void CPUAllocator::init(void* mem, const std::size_t n)
